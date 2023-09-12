@@ -45,11 +45,11 @@ The password will always be the flag of the previous level.
 
 --------------
 
-We can establish a connection with the server via ssh, and using the password `aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG`:
+We can establish a connection with the server via ssh, and using the password `2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe`:
 
 ``` commandline
 ┌──(francis㉿ghost)-[~]
-└─$ ssh bandit3@bandit.labs.overthewire.org -p 2220
+└─$ ssh bandit4@bandit.labs.overthewire.org -p 2220
                          _                     _ _ _   
                         | |__   __ _ _ __   __| (_) |_ 
                         | '_ \ / _` | '_ \ / _` | | __|
@@ -60,7 +60,7 @@ We can establish a connection with the server via ssh, and using the password `a
                       This is an OverTheWire game server. 
             More information on http://www.overthewire.org/wargames
 
-bandit3@bandit.labs.overthewire.org's password: aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
+bandit4@bandit.labs.overthewire.org's password: 2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
 
 
       ,----..            ,----,          .---.
@@ -82,7 +82,7 @@ Welcome to OverTheWire!
 
 <snip>
 
-bandit3@bandit:~$ 
+bandit4@bandit:~$ 
 ```
 
 ## Looking Around
@@ -92,35 +92,65 @@ We first start by looking around the home directory, as we have no idea what is 
 which allows us to `list` the content of the current directory (or specified directory).
 
 ``` commandline
-bandit3@bandit:~$ ls
+bandit4@bandit:~$ ls
 inhere/
 ```
 
-Okay, it seems like `inhere` is a directory. Let's change directory to `inhere` and check out what's in there.
+Like the previous level, we have a directory named "inhere" which we can go into using `cd`.
+
 
 ``` commandline
-bandit3@bandit:~$ cd inhere
-bandit3@bandit:~/inhere$ ls
-bandit3@bandit:~/inhere$ 
+bandit4@bandit:~$ cd inhere
+bandit4@bandit:~/inhere$ ls
+-file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
 ```
 
-It seems like the directory is empty. However, let's use the same flags we used for the last level to check the files in the directory.
+Okay, we have a bunch of files all starting with "-" again. This is a throwback to Level 1, where we had to use `./` 
+to force `cat` to recognize "-" as part of the filename. We can use the `ls` command with `-la` flags to get some more 
+details about the files in the directory.
 
-``` commandline
-bandit3@bandit:~/inhere$ ls -la
-total 12
+``` commandline 
+bandit4@bandit:~/inhere$ ls -la
+total 48
 drwxr-xr-x 2 root    root    4096 Apr 23 18:04 .
 drwxr-xr-x 3 root    root    4096 Apr 23 18:04 ..
--rw-r----- 1 bandit4 bandit3   33 Apr 23 18:04 .hidden
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file00
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file01
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file02
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file03
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file04
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file05
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file06
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file07
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file08
+-rw-r----- 1 bandit5 bandit4   33 Apr 23 18:04 -file09
 ```
 
-Using the `-l` flag and the `-a` flag, we were able to "uncover" all the files that are in the directory. As we can see,
-there is a file names `.hidden` which is probably the one we are looking for. Let's print its contents.
+Okay, all files have the exact same size, so we know that one file is contains the `flag`, the others are probably just decoys.
 
+We can use `file` to check the type of the files. Using `file` with a wildcard `*` we can show the types/type of content
+of the files.
+
+``` commandline 
+bandit4@bandit:~/inhere$ file ./-*
+./-file00: data
+./-file01: data
+./-file02: data
+./-file03: data
+./-file04: data
+./-file05: data
+./-file06: data
+./-file07: ASCII text
+./-file08: data
+./-file09: Non-ISO extended-ASCII text, with no line terminators
+```
+Hmm, considering all files contain just `data` except file `./-file07`, which contains `ASCII text`, we can print out the
+contents of `./-file07` to check if the flag is hidden in there.
 
 ``` commandline
-bandit3@bandit:~/inhere$  cat .hidden
-2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe
+bandit4@bandit:~/inhere$ cat ./-file07
+lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
 ```
 
-Boom. We got another flag. Since there are no weird prefixes in the filename, we don't need to use `quotes`.
+The flag was hidden in file 7. We got a flag. 
+
