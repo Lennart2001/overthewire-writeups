@@ -1,0 +1,99 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\usepackage{listings}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\begin{document}
+
+\onecolumn
+
+
+\title{HackTheBox: WhatIsIt?}
+
+\author{\IEEEauthorblockN{Lennart Buhl}
+\IEEEauthorblockA{\textit{Department of Computer Science} \\
+\textit{University of St. Thomas}\\
+\textit{September, 2023}}}
+
+\maketitle
+
+
+
+\begin{abstract}
+
+\end{abstract}
+
+
+
+\begin{IEEEkeywords}
+programming, cybersecurity, security, pentesting
+\end{IEEEkeywords}
+
+
+\section{Introduction}
+Redeemer is located at IPv4 10.129.113.76. Which we can access through the HackTheBox OpenVPN gateway.
+We achieve this by simply running this command in a shell:
+\begin{scriptsize}
+\begin{verbatim}
+sudo openvpn starting_point_{user}.ovpn
+\end{verbatim}
+\end{scriptsize}
+
+\\
+\textit{We will now switch to root shell.}
+\\
+
+Once we are on the VPN, we scan the machine via nmap:
+\begin{scriptsize}
+\begin{verbatim}
+root@ghost:~# nmap -p- -sC -sV 10.129.113.76
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-09-10 12:26 CDT
+Nmap scan report for 10.129.113.76
+Host is up (0.038s latency).
+Not shown: 65533 filtered tcp ports (no-response)
+PORT     STATE SERVICE VERSION
+80/tcp   open  http    Apache httpd 2.4.52 ((Win64) OpenSSL/1.1.1m PHP/8.1.1)
+|_http-server-header: Apache/2.4.52 (Win64) OpenSSL/1.1.1m PHP/8.1.1
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+5985/tcp open  http    Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 117.82 seconds
+\end{verbatim}
+\end{scriptsize}
+
+Okay, we have two open ports. Port 80 for http and then Port 5985 which also services http. Nmap tells us that there is a website. So, let's visit the website to see what gives.
+
+
+
+\begin{scriptsize}
+\begin{verbatim}
+
+\end{verbatim}
+\end{scriptsize}
+
+
+\begin{thebibliography}{00}
+
+\bibitem{gobuster} Oj. “Gobuster: Directory/File, DNS and VHost Busting Tool Written in Go.” GitHub, \url{https://github.com/OJ/gobuster/releases/tag/v3.6.0}.
+\bibitem{seclists} Daniel Miessler. “SecLists Is the Security Tester’s Companion. It’s a Collection of Multiple Types of Lists Used during Security Assessments, Collected in One Place. List Types Include Usernames, Passwords, Urls, Sensitive Data Patterns, Fuzzing Payloads, Web Shells, and Many More.” GitHub, \url{https://github.com/danielmiessler/SecLists/releases/tag/2023.2}.
+
+\end{thebibliography}
+\vspace{12pt}
+
+
+\end{document}
