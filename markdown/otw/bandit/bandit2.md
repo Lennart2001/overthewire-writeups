@@ -1,4 +1,4 @@
-# Bandit 0
+# Bandit 2
 
 ### Content
 - **[Overview](#Overview)**
