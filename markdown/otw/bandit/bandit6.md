@@ -158,6 +158,7 @@ starting with the root directory.
 - `-user bandit7` We specify that the user of the file/directory must be `bandit7`
 - `-group bandit6` We specify that the group of the file/directory must be `bandit6`
 - `-size 33c` We specify the size of the file/directory must be 33 bytes
+- `2>&1` We specify that the `stderr` gets added to `stdout`
 
 #### 2>&1
 
