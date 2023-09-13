@@ -6,7 +6,7 @@
 - **[Connecting](#Connecting)**
 - **[Looking Around](#Looking-Around)**
 - **[Crafting a Command](#Crafting-a-Command)**
-  - [Workflow of Pipeline](#Workflow-of-Pipeline)
+  - [Workflow of Pipeline](#Workflow-of-a-Pipeline)
 
 
 ## Overview
