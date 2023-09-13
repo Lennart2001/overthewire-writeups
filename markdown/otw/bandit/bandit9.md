@@ -99,5 +99,5 @@ which allows us to `list` the content of the current directory (or specified dir
 
 ``` commandline
 bandit9@bandit:~$ ls
-
+data.txt
 ```
