@@ -5,6 +5,8 @@
 - **[Task](#Task)**
 - **[Connecting](#Connecting)**
 - **[Looking Around](#Looking-Around)**
+- **[Crafting a Command](#Crafting-a-Command)**
+  - [Workflow of Pipeline](#Workflow-of-Pipeline)
 
 
 ## Overview
@@ -126,10 +128,12 @@ file somewhere on the server. Not specifically in the `bandit6` directory.
 This complicates things and makes it more challenging to find the flag. We can use the `find` command with a couple cool flags
 to try to narrow down the search.
 
+## Crafting a Command     
+
 We will have to use multiple pipelines to find the file, so we will break down each command and their functions.
 
 ``` commandline
-bandit6@bandit:~$ find / -user bandit7 -group bandit6
+bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c 2>&1
 find: ‘/var/log’: Permission denied
 find: ‘/var/crash’: Permission denied
 find: ‘/var/spool/rsyslog’: Permission denied
@@ -153,9 +157,36 @@ starting with the root directory.
 - `find /` We are starting out search in the root directory
 - `-user bandit7` We specify that the user of the file/directory must be `bandit7`
 - `-group bandit6` We specify that the group of the file/directory must be `bandit6`
+- `-size 33c` We specify the size of the file/directory must be 33 bytes
+
+#### 2>&1
+
+What is being printed in the terminal and what would be sent through to the next command are not the same thing.
+In Linux and other Unix-like operating systems, programs have access to three standard streams:
+
+- **Standard Input** (`stdin`) - File Descriptor 0
+- **Standard Output** (`stdout`) - File Descriptor 1
+- **Standard Error** (`stderr`) - File Descriptor 2
+                  
+The terminal combines the `stdout` and `stderr` but only passes on `stdout` to files or outputs (by default).
+We can specify that we *append* or *add* the `stderr` to the `stdout` via the *File Descriptors*.
+
+
+- `2>` Redirects the standard error (`stderr`), which has the file descriptor 2.                                                             
+- `&1` The ampersand `&` indicates that what follows is a file descriptor, not a filename. The 1 refers to standard output (`stdout`), which has the file descriptor 1.
+
+
+By using `2>&1` in the find command, we make sure that any error messages (like "Permission denied") 
+are also sent through the pipeline, allowing subsequent grep commands to filter them out if necessary.
+
+
+-----------
+
+
+
 
 ``` commandline
-grep --fixed-strings --invert-match --ignore-case "permission"
+grep --fixed-string --invert-match --ignore-case "permission"
 ```
 `grep` allows us to print lines that match a certain pattern. We can add flags to specify what kind of lines are being printed.
 For instance, in our example we used `--fixed-strings`, `--invert-match` and `--ignore-case`.
@@ -164,8 +195,45 @@ For instance, in our example we used `--fixed-strings`, `--invert-match` and `--
 - `--invert-match` Invert the sense of matching, to select non-matching lines.
 - `--ignore-case` Ignore case distinctions in patterns and input data, so that characters that differ only in case match each other.
 
+We specified to ignore lines that contain the word "permission" (ignoring the case of individual characters) with this command.
 
 ``` commandline
-grep --fixed-strings --invert-match --ignore-case "directory"
+grep --fixed-string --invert-match --ignore-case "directory"
 ```
+
+We specified to ignore lines that contain the word "directory" (ignoring the case of individual characters) with this command.
+
+We now are able to combine all three commands via pipelines (`|`). 
+Pipelines in a Unix-like operating system such as Linux allow you to chain multiple commands together. 
+The standard output (`stdout`) of one command becomes the standard input (`stdin`) of the next command. 
+                    
+#### Workflow of a Pipeline
+
+``` bash
+command1 | command2 | command3 | ...
+```
+
+- **Initialization**: When the shell encounters the pipe symbol (`|`), it creates a pipe — an inter-process communication mechanism.
+- **Forking**: The shell then forks itself to create a child process for each command in the pipeline.
+- **Execution**: Each command in the pipeline is executed in its own child process.
+- **Data Flow**: The `stdout` of `command1` is connected to the `stdin` of `command2`, and so on. This allows data to flow seamlessly through the pipeline.
+- **Synchronization**: Each command waits for its predecessor to provide input (if any) and for its successor to read its output (if any).
+---------------
+
+Now, we can create a multi-pipeline command.
+
+``` commandline
+bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c 2>&1 | grep --fixed-string --invert-match --ignore-case "permission" | grep --fixed-string --invert-match --ignore-case "directory"
+/var/lib/dpkg/info/bandit7.password
+```
+
+We are given one filepath. Lets print the file.
+
+``` commandline
+bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
+z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
+```
+
+Boom we got the flag. 
+      
 
