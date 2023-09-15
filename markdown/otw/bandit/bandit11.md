@@ -1,4 +1,4 @@
-# Bandit 6
+# Bandit 11
 
 ### Content
 - **[Overview](#Overview)**
@@ -89,8 +89,7 @@ bandit11@bandit:~$
 
 --------------
 
-The password for the next level is stored in the file data.txt, which contains base64 encoded data
-
+The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
 
 ## Looking Around
 
