@@ -1,4 +1,4 @@
-# Bandit 17
+# Bandit 18
 
 ### Content
 - **[Overview](#Overview)**
@@ -183,6 +183,5 @@ awhqfNnAbc1naukrpqDYcF95h7HoMTrC
 
 
 Boom we got another flag.
-
 
 
