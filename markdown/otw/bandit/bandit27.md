@@ -172,6 +172,8 @@ bandit27@bandit:/tmp/tmp.ouQxSAVTJu$ ls
 repo
 ```
 
+We used this level's password for the `github-repo's` password: `YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS`
+
 Boom we got a repo. Let's `cd` in and look around.
 
 ``` text
