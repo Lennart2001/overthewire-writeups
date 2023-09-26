@@ -1,4 +1,4 @@
-# Bandit 24
+# Bandit 27
 
 ### Content
 - **[Overview](#Overview)**
@@ -183,8 +183,6 @@ The password to the next level is: AVanL161y9rsbcJIsFHuw35rjaOM19nR
 ```
 
 Hmm. This was pretty easy. But we got the next flag. YEAH!
-
-
 
 
 
