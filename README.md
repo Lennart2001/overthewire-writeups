@@ -37,3 +37,17 @@
 - [Bandit 31](otw/bandit/bandit31.md)
 - [Bandit 32](otw/bandit/bandit32.md)
 
+
+### [Leviathan](otw/leviathan)
+
+- [Leviathan 0](otw/leviathan/leviathan0.md)
+- [Leviathan 1](otw/leviathan/leviathan1.md)
+- [Leviathan 2](otw/leviathan/leviathan2.md)
+- [Leviathan 3](otw/leviathan/leviathan3.md)
+- [Leviathan 4](otw/leviathan/leviathan4.md)
+- [Leviathan 5](otw/leviathan/leviathan5.md)
+- [Leviathan 6](otw/leviathan/leviathan6.md)
+
+
+
+
