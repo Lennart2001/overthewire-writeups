@@ -39,10 +39,10 @@ The password will always be the flag of the previous level. With the exception o
 
 --------------
 
-We can establish a connection with the server via ssh, and using the password `BRUTE`:
+We can establish a connection with the server via ssh, and using the password `CLEARTEXT`:
 
 ``` text
-➜  ~  ssh krypton4@krypton.labs.overthewire.org -p 2231
+➜  ~  ssh krypton5@krypton.labs.overthewire.org -p 2231
                       _                     _              
                      | | ___ __ _   _ _ __ | |_ ___  _ __  
                      | |/ / '__| | | | '_ \| __/ _ \| '_ \ 
@@ -53,7 +53,7 @@ We can establish a connection with the server via ssh, and using the password `B
                       This is an OverTheWire game server. 
             More information on http://www.overthewire.org/wargames
 
-krypton4@krypton.labs.overthewire.org's password: BRUTE
+krypton5@krypton.labs.overthewire.org's password: CLEARTEXT
 
       ,----..            ,----,          .---.
      /   /   \         ,/   .`|         /. ./|
@@ -76,7 +76,7 @@ Welcome to OverTheWire!
 
   Enjoy your stay!
 
-krypton4@gibson:~$ 
+krypton5@gibson:~$ 
 ```
 
 ## Looking Around
