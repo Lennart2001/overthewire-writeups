@@ -148,11 +148,11 @@ cat found* krypton5 | tr -d " " | fold -w 6 | cut -c 1 | sort | uniq -c | sort -
 However, doing frequency analysis is very effective, but also very tedious in bash shell. A much much simpler solution
 would be to look up a vinegere cipher solver online: **https://www.guballa.de/vigenere-solver**
 
-<img alt="find_key_vigenere.png" src="extras/find_key_vigenere.png" width="600"/>
+<img alt="find_key_vigenere.png" src="extras/find_key_vigenere_kryp4.png" width="600"/>
 
 After plugging in the `found1` text, we are told `frekey` is the key.
 
-<img alt="find_password_from_key_vignere.png" src="extras/find_password_from_key_vignere.png" width="600"/>
+<img alt="find_password_from_key_vignere.png" src="extras/find_password_from_key_vignere_kryp4.png" width="600"/>
 
 We then move to a different website: **https://www.dcode.fr/vigenere-cipher** to find convert the `krypton5` file
 into the plaintext. 
