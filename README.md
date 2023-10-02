@@ -49,5 +49,15 @@
 - [Leviathan 6](otw/leviathan/leviathan6.md)
 
 
+### [Krypton](otw/Krypton)
+
+- [Krypton 0](otw/Krypton/krypton0.md)
+- [Krypton 1](otw/Krypton/krypton1.md)
+- [Krypton 2](otw/Krypton/krypton2.md)
+- [Krypton 3](otw/Krypton/krypton3.md)
+- [Krypton 5](otw/Krypton/krypton5.md)
+- [Krypton 4](otw/Krypton/krypton4.md)
+- [Krypton 6](otw/Krypton/krypton6.md)
+
 
 
